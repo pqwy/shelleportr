@@ -36,15 +36,15 @@ module Store = struct
       let w' = sqrt (w ** 2. +. 100.) in
       Hashtbl.replace t path w'
 
-  let find ~db pattern =
+  let search ~db pattern =
     let rex = Re_pcre.regexp ~flags:[`CASELESS] (pattern ^ "[^/]*$") in
-    let rec find = function
+    let rec aux = function
       | []    -> None
       | p::ps ->
           try (let _ = Re_pcre.exec ~rex p in Some p)
-          with Not_found -> find ps
+          with Not_found -> aux ps
     in
-    find @@ List.map fst @@ weighted ~db
+    aux @@ List.map fst @@ weighted ~db
 
 end
 
@@ -62,14 +62,16 @@ let cmd_add ~db ~path =
   if path <> home then
     Store.add ~db (canonicalize path)
 
-let cmd_query ~db pattern =
-  match Store.find ~db pattern with
+let cmd_search ~db pattern =
+  match Store.search ~db pattern with
   | None   -> ()
   | Some x -> print_endline x
 
 let cmd_stat ~db =
+  let open Printf in
+  printf "[%s]\n\n%!" db ;
   List.iter
-    (fun (p, w) -> Printf.printf "%.02f :  %s\n%!" w p)
+    (fun (p, w) -> printf "%.02f :  %s\n%!" w p)
     (Store.weighted ~db)
 
 
@@ -101,7 +103,7 @@ let cmd_term =
     | Some path, _, _, _    -> cmd_add ~db ~path
     | _, true, _, _         -> cmd_add ~db ~path:(Sys.getcwd ())
     | _, _, true, _         -> cmd_stat ~db
-    | _, _, _, Some pattern -> cmd_query ~db pattern
+    | _, _, _, Some pattern -> cmd_search ~db pattern
     | _                     -> cmd_stat ~db
   in
   Term.(pure command $ db $ vote $ vote_cwd $ stat $ search)
