@@ -1,0 +1,18 @@
+OASISFormat: 0.4
+Name:        teleport
+Version:     0.0.1
+Synopsis:    A shell teleport
+Authors:     David Kaloper <david@numm.org>
+Maintainers: David Kaloper <david@numm.org>
+License:     FreeBSD
+Plugins:     META (0.4), DevFiles (0.4)
+Description:
+  Teleport!
+BuildTools:  ocamlbuild
+
+Executable "teleport"
+  Path            : src/
+  Install         : true
+  CompiledObject  : native
+  MainIs          : teleport.ml
+  BuildDepends    : unix,re.pcre,cmdliner
