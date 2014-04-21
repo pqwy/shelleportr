@@ -14,5 +14,6 @@ Executable "teleport"
   Path            : src/
   Install         : true
   CompiledObject  : native
+  DataFiles       : teleport.bash
   MainIs          : teleport.ml
   BuildDepends    : unix,re.pcre,cmdliner
