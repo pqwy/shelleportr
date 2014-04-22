@@ -1,19 +1,19 @@
 OASISFormat: 0.4
-Name:        teleport
+Name:        shelleportr
 Version:     0.0.1
-Synopsis:    A shell teleport
+Synopsis:    A shell teleport.
 Authors:     David Kaloper <david@numm.org>
 Maintainers: David Kaloper <david@numm.org>
 License:     FreeBSD
 Plugins:     META (0.4), DevFiles (0.4)
 Description:
-  Teleport!
+  SHELLEPORT!
 BuildTools:  ocamlbuild
 
-Executable "teleport"
+Executable "shelleportr"
   Path            : src/
   Install         : true
   CompiledObject  : native
-  DataFiles       : teleport.bash
-  MainIs          : teleport.ml
+  DataFiles       : shelleportr.bash
+  MainIs          : shelleportr.ml
   BuildDepends    : unix,re.pcre,cmdliner

@@ -79,7 +79,7 @@ open Cmdliner
 
 let cmd_term =
   let db =
-    Arg.(value @@ opt string (home ^ "/.teleport")
+    Arg.(value @@ opt string (home ^ "/.shelleportr")
                @@ info ["db"] ~docv:"PATH"
                     ~doc:"Use the database in $(docv).")
   and vote =
@@ -109,7 +109,7 @@ let cmd_term =
   Term.(pure command $ db $ vote $ vote_cwd $ stat $ search)
 
 let info =
-  Term.info "teleport" ~version
+  Term.info "shelleportr" ~version
     ~doc:"upvote some directories, then search for them"
 
 let () =
